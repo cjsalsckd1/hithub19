@@ -1,0 +1,34 @@
+use korea
+alter database korea default character set utf8;
+-----------
+< DDL >
+
+1. 테이블 생성
+   create table 테이블명 (
+   필드이름 필드타입 {{{not null}}}            #not null: 필수란에 기입 / 필드타입: varchar, int, date, ...
+   primary key(필드명)                         #primary key: not null(변경 X)
+   );
+
+2. 테이블 조회
+   desc 테이블명
+
+3. 테이블 변경
+   alter table 테이블명 change 변경전필드이름 변경후필드이름 변경할필드타입등나머지~;
+   alter table 테이블명 add primary key(필드이름)               #기본값 추가
+
+4. 테이블 삭제
+   alter table 테이블명 drop 필드명;
+
+<DML> (필드명의 구성요소)
+
+1. 데이터 삽입 
+   insert into 테이블명 values (레이블1, '레이블2', '레이블3', null, null)
+
+2. 데이터 조회
+   select * from 테이블명 {{{where 절}}}
+
+3. 데이터 수정
+   update 테이블명 set 열이름=수정내용 where 열이름=열내용
+
+4. 데이터 삭제
+   delete from 테이블명 where 열이름=열내용

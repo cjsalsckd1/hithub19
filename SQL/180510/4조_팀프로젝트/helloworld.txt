@@ -1,0 +1,85 @@
+
+create database helloworld ;
+
+
+ALTER DATABASE helloworld DEFAULT CHARACTER SET utf8;
+
+
+create user "hellouser"@"localhost" identified by "12345";
+GRANT ALL PRIVILEGES ON helloworld.* TO "hellouser"@"localhost";
+flush privileges;
+
+
+use helloworld ;
+
+
+
+create table 고객 (
+    id         int          not null AUTO_INCREMENT,
+    이름       varchar(20)  not null,
+    생년월일   date         not null,
+    연락처     varchar(20)  not null,
+    주소       varchar(255) not null,
+    포인트     int,
+    primary key (id)
+);
+
+
+
+create table 상품 (
+    상품번호   int          not null AUTO_INCREMENT,
+    상품명     varchar(100) not null,
+    가격       int          not null,
+    상품개요   varchar(255),
+    primary key (상품번호)
+);
+
+
+
+create table 주문 (
+    주문번호   int          not null AUTO_INCREMENT,
+    id         int          not null,
+    주문날짜   date         not null,
+    배송지     varchar(255) not null,
+    결제수단   varchar(20)  not null,
+    총결제금액 int          not null,
+    primary key (주문번호),
+    foreign key (id) references 고객 (id) on delete cascade on update cascade
+);
+
+
+
+create table 주문내역 (
+    주문번호   int          not null,
+    상품번호   int          not null,
+    수량       int          not null,
+    배송날짜   date,
+    배송완료일 date,
+    primary key (주문번호, 상품번호),
+    foreign key (주문번호) references 주문 (주문번호) on delete cascade on update cascade
+);
+
+
+
+insert into 고객 values (1,"홍길동","2000-01-01","001-0001-0001","대구시",null);
+insert into 고객 values (2,"전우치","1980-02-02","002-0002-0002","부산시",null);
+insert into 고객 values (3,"임꺽정","1990-03-03","003-0003-0003","울산시",null);
+
+
+insert into 상품 values (1,"모니터",500000,"컴퓨터모니터");
+insert into 상품 values (2,"컴본체",1500000,"컴퓨터 본체");
+insert into 상품 values (3,"키보드",10000,"컴퓨터 키보드");
+
+
+insert into 주문 values (1,1,"2018-05-10","대구시","카드결재",2010000);
+
+
+insert into 주문내역 values (1,1,1,"2018-05-10",null);
+insert into 주문내역 values (1,2,1,"2018-05-10",null);
+insert into 주문내역 values (1,3,1,"2018-05-10",null);
+
+
+
+
+
+

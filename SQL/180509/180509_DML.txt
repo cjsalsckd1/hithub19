@@ -1,0 +1,128 @@
+< DDL >
+
+create table employees (
+uid int,
+name varchar(20) not null,
+password varchar(20),
+position varchar(20) not null,
+workplace varchar(20) not null,
+address varchar(256),
+birthday varchar(20),
+joinday date,
+weddingday date,
+primary key (uid)
+);
+
+create table salaries (
+emp_no int not null, 
+salary int not null,
+from_date date,
+to_date date,
+primary key (emp_no, from_date),
+foreign key (emp_no) references employees (Uid) on delete cascade
+);
+
+2. 테이블 변경
+alter table 테이블명 change 변경전필드명 변경후필드명 필드타입;
+
+
+
+----------
+
+< DML >
+
+insert into employees (uid, name, password, position, workplace, address, birthday, weddingday)
+values (1002, 'kim', '1234', 'CEO', 'DESIGN', 'Seoul', '2000-01-01', '2020-02-02');
+
+insert into salaries values
+(1002, 2000000, '2012-07-01', '2013-06-30'),
+(1002, 3000000, '2013-07-01', '2014-06-30'),
+(1002, 4000000, '2011-07-01', '2018-06-30');
+
+insert into employees values
+(1003, 'park', '1234', 'CFO', 'ACCOUNT', 'Seoul', '2000-12-31', '2018-05-08', '2010-01-01'),
+(1004, 'lee', '1234', 'COO', 'IT', 'seoul', '2001-03-01', '2018-05-08', '2011-07-24');
+
+insert into salaries values
+(1003, 5000000, '2015-05-05', '2016-04-29'),
+(1004, 4000000, '2018-05-08', '2019-04-07'), 
+(1006, 3000000, '2018-05-08', '2019-04-07');
+
+----------
+
+create table seq_table(
+id int not null primary key auto_increment,
+name varchar(20)
+);
+
+insert into seq_table
+values(null, '홍길동');
+
+insert into seq_table
+values(null, '홍시라');
+
+alter table seq_table auto_increment=10;
+
+insert into seq_table
+values(null, '디자인');
+
+delete from seq_table where id=13;
+
+----------
+
+< DCL >
+
+회원: ID(PK), 이름, 비번, 생년월일. 전화번호, 주소, 마일리지, 연체료
+DVD: DVD번호(PK), 제목, 장르, 등급, 출시, 감독, 주연, 대여가격
+대여: 대여일, 반납일 ,대여료, 마일리지
+-----
+create table members (
+아이디 varchar(20) not null,
+비밀번호 varchar(20) not null,
+생년월일 date not null,
+전화번호 varchar(20) not null,
+주소 varchar(255),
+마일리지 int,
+연체료 int,
+primary key(아이디)
+);
+
+create table dvds (
+dvd번호 varchar(20),
+제목 varchar(20) not null,
+장르 varchar(20) not null,
+등급 varchar(20) not null,
+출시 int,
+감독 varchar(20),
+주연 varchar(20),
+대여가격 int not null,
+primary key(dvd번호)
+);
+
+create table taxs (
+대여일 int not null,
+반납일 int not null,
+대여료 int not null,
+마일리지 int
+);
+-----
+insert into members values('apple', 'a123', '2000-01-01', '010-1111-1111', 'Seoul', null, null);
+
+insert into members values('amazon', 'a321', '2000-02-02', '010-2222-2222', 'Daegu', null, null);
+
+insert into members values('google', 'g123', '2004-04-04', '010-4444-4444', 'Busan', null, null);
+
+insert into members values('facebook', 'f123', '2006-06-06', '010-6666-6666', 'Incheon', null. null);
+
+insert into members values('dropbox', 'd123', '2008-08-08', '010-8888-8888', 'Daejeon', null, null);
+
+insert into members values('samsung', 's123', '1990-09-09', '010-9999-9999', 'Gwangju', null, null);
+---
+insert into dvds values('11223c', '헝거게임', '액션', '18세', '2000', '찰스', '제니퍼로렌스', 10000);
+
+insert into dvds values
+('33215b', '인타임', '액션', '18세', '2005', '밥스', '클레이모레츠', 15000),
+('42364a', '너의이름은', '드라마', '15세', '2016', '모리', '유미', 20000),
+('12165d', '조선명탐정', '코미디', '12세', '2012', '홍삼수', '이연희', 13000),
+('23412f', '쿵푸팬더', '코미디', '7세', '2010', '이소룡', '마윈', 9000);
+---
